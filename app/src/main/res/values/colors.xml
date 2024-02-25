@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--App Colors-->
+
+    <color name="mintGreen">#39A552</color>
+    <color name="text_gray">#4F5A69</color>
+    <color name="red">#C91C22</color>
+    <color name="blue">#003E90</color>
+    <color name="pink">#ED1E79</color>
+    <color name="caramel">#CF7E48</color>
+    <color name="light_blue">#4882CF</color>
+    <color name="yellow">#F2D352</color>
 </resources>
