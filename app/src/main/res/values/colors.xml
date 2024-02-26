@@ -13,4 +13,7 @@
     <color name="caramel">#CF7E48</color>
     <color name="light_blue">#4882CF</color>
     <color name="yellow">#F2D352</color>
+    <color name="authorTextColor">#79828B</color>
+    <color name="titleTextColor">#42505C</color>
+    <color name="timeTextColor">#A3A3A3</color>
 </resources>

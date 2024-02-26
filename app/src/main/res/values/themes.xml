@@ -6,4 +6,7 @@
     </style>
 
     <style name="Theme.NewsApp" parent="Base.Theme.NewsApp" />
+    <style name="RoundedSquare">
+        <item name="cornerSize">10%</item>
+    </style>
 </resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/article_image"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/RoundedSquare"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/article_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/poppins"
+            android:textColor="@color/authorTextColor"
+            android:textSize="14sp"
+            tools:text="BBC News" />
+
+        <TextView
+            android:id="@+id/article_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="8dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="@color/titleTextColor"
+            android:textSize="22sp"
+            tools:text="SAG Awards 2024: Oppenheimer dominates ahead of Oscars" />
+
+        <TextView
+            android:id="@+id/article_publishAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="8dp"
+            android:textColor="@color/timeTextColor"
+            android:textSize="16sp"
+            tools:text="3 hours" />
+    </LinearLayout>
+</layout>
