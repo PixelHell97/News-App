@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
@@ -21,8 +22,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class NewsFragment : Fragment() {
-    private var _binding: FragmentNewsBinding? = null
-    private val binding get() = _binding!!
+    private var _viewBinding: FragmentNewsBinding? = null
+    private val binding get() = _viewBinding!!
     private val args: NewsFragmentArgs by navArgs()
     private var cat: String? = null
     private var articleAdapter = ArticleAdapter(null)
@@ -32,7 +33,7 @@ class NewsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentNewsBinding.inflate(inflater, container, false)
+        _viewBinding = FragmentNewsBinding.inflate(inflater, container, false)
         cat = args.categoryType
         return binding.root
     }
@@ -40,6 +41,14 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getNewsResponse()
+        initViews()
+    }
+
+    private fun initViews() {
+        articleAdapter.onItemClickListener = ArticleAdapter.OnItemClickListener { article, _ -> 
+            val action = NewsFragmentDirections.actionNewsFragmentToArticleDisplayFragment(article)
+            Navigation.findNavController(requireView()).navigate(action)
+        }
     }
 
     private fun getNewsResponse() {
@@ -169,6 +178,6 @@ class NewsFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        _viewBinding = null
     }
 }

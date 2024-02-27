@@ -1,7 +1,10 @@
 package com.pixel.newsapp.api.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Source(
     @SerializedName("category")
     val category: String? = null,
@@ -17,4 +20,4 @@ data class Source(
     val name: String? = null,
     @SerializedName("url")
     val url: String? = null,
-)
+) : Parcelable
