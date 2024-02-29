@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="sourceTitle"
-            type="String" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,13 +23,13 @@
             android:id="@+id/source_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tabMode="scrollable"
-            android:background="@android:color/transparent"
             app:tabSelectedTextColor="@color/mintGreen"
-            app:tabTextColor="@color/text_gray"/>
+            app:tabTextColor="@color/text_gray" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_articles"
@@ -43,11 +37,27 @@
             android:layout_height="0dp"
             android:padding="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/source_tab_layout"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_article"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/source_tab_layout"
+            tools:listitem="@layout/item_article" />
+
+        <TextView
+            android:id="@+id/empty_list_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:gravity="center"
+            android:text="@string/there_is_no_article_here_right_now_npleace_come_back_later"
+            android:textColor="@color/text_gray"
+            android:textSize="32sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

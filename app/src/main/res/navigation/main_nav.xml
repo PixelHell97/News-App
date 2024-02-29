@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.pixel.newsapp.ui.home.category.CategoryFragment"
-        android:label="Category"
+        android:label="@string/category"
         tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_categoryFragment_to_newsFragment"
@@ -17,7 +17,6 @@
     <fragment
         android:id="@+id/newsFragment"
         android:name="com.pixel.newsapp.ui.home.news.NewsFragment"
-        android:label="News"
         tools:layout="@layout/fragment_news">
         <action
             android:id="@+id/action_newsFragment_to_categoryFragment"
@@ -34,12 +33,11 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.pixel.newsapp.ui.home.setting.SettingsFragment"
-        android:label="Settings"
+        android:label="@string/settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/articleDisplayFragment"
         android:name="com.pixel.newsapp.ui.home.article.ArticleDisplayFragment"
-        android:label="fragment_article_display"
         tools:layout="@layout/fragment_article_display" >
         <argument
             android:name="ArticleSource"

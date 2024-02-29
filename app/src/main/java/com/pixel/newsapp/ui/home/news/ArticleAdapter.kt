@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.pixel.newsapp.FragmentExtensions
 import com.pixel.newsapp.R
 import com.pixel.newsapp.api.model.articleResponse.Article
 import com.pixel.newsapp.databinding.ItemArticleBinding
@@ -15,7 +16,9 @@ class ArticleAdapter(private var articleList: List<Article?>?) :
         fun bind(article: Article?) {
             binding.articleSource.text = article?.source?.name
             binding.articleTitle.text = article?.title
-            binding.articlePublishAt.text = article?.publishedAt
+            binding.articlePublishAt.text = article?.publishedAt?.let {
+                FragmentExtensions.formatDurationFromNow(it)
+            }
             Glide
                 .with(itemView)
                 .load(article?.urlToImage)

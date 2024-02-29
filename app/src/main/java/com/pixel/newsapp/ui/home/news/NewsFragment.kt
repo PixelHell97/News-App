@@ -1,6 +1,7 @@
 package com.pixel.newsapp.ui.home.news
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.pixel.newsapp.api.model.articleResponse.Article
 import com.pixel.newsapp.api.model.articleResponse.ArticlesResponse
 import com.pixel.newsapp.api.model.sourcesResponse.SourcesResponse
 import com.pixel.newsapp.databinding.FragmentNewsBinding
+import com.pixel.newsapp.ui.home.host.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,9 +26,16 @@ import retrofit2.Response
 class NewsFragment : Fragment() {
     private var _viewBinding: FragmentNewsBinding? = null
     private val binding get() = _viewBinding!!
+
+    // private lateinit var newsViewModel: NewsViewModel
     private val args: NewsFragmentArgs by navArgs()
-    private var cat: String? = null
+    private var catType: String? = null
     private var articleAdapter = ArticleAdapter(null)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // newsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,29 +43,40 @@ class NewsFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _viewBinding = FragmentNewsBinding.inflate(inflater, container, false)
-        cat = args.categoryType
+        catType = args.categoryType
+        val catTypeCap = catType?.elementAt(0)?.uppercaseChar()
+            ?.plus(catType?.removePrefix(catType?.elementAt(0).toString()).toString())
+        (activity as MainActivity).supportActionBar?.title = catTypeCap
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getNewsResponse()
+        // observeData()
         initViews()
     }
 
-    private fun initViews() {
-        articleAdapter.onItemClickListener = ArticleAdapter.OnItemClickListener { article, _ -> 
-            val action = NewsFragmentDirections.actionNewsFragmentToArticleDisplayFragment(article)
-            Navigation.findNavController(requireView()).navigate(action)
+    /*private fun observeData() {
+        newsViewModel.newsList.observe(viewLifecycleOwner) { sourcesList ->
+            showProgressBar(true)
+            showNewsSources(sourcesList)
         }
-    }
-
-    private fun getNewsResponse() {
+        newsViewModel.articleList.observe(viewLifecycleOwner) { articleList ->
+            showProgressBar(true)
+            setUpArticle(articleList)
+        }
+        newsViewModel.errorDialog.observe(viewLifecycleOwner) {
+            if (it != null) {
+                showError(it)
+            }
+        }
+    }*/
+    private fun getNewsResponse(category: String?) {
         showProgressBar(true)
         ApiManager
             .getServices()
             .getNewsSources(
-                category = cat,
+                category = category,
             ).enqueue(object : Callback<SourcesResponse> {
                 override fun onResponse(
                     call: Call<SourcesResponse>,
@@ -64,14 +84,17 @@ class NewsFragment : Fragment() {
                 ) {
                     if (response.isSuccessful) {
                         showNewsSources(response.body()?.sources)
+                        Log.e("source->", "GotSources")
                         return
                     } else {
                         val responseJson = response.errorBody()?.string()
                         val errorResponse =
                             Gson().fromJson(responseJson, SourcesResponse::class.java)
                         showError(
-                            "Access Error",
-                            errorResponse.message,
+                            DialogMessage(
+                                "Access Error",
+                                errorResponse.message,
+                            ),
                         )
                     }
                 }
@@ -79,16 +102,75 @@ class NewsFragment : Fragment() {
                 override fun onFailure(call: Call<SourcesResponse>, t: Throwable) {
                     t.message?.let {
                         showError(
-                            "Network Error",
-                            it,
+                            DialogMessage(
+                                "Network Error",
+                                it,
+                            ),
                         )
                     }
                 }
             })
     }
 
+    fun loadNewResource(source: Source?) {
+        showProgressBar(true)
+        source?.id?.let { sourceId ->
+            ApiManager
+                .getServices()
+                .getNewsArticle(sources = sourceId)
+                .enqueue(object : Callback<ArticlesResponse> {
+                    override fun onResponse(
+                        call: Call<ArticlesResponse>,
+                        response: Response<ArticlesResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            showArticles(response.body()?.articles)
+                            return
+                        } else {
+                            val responseJson = response.errorBody()?.string()
+                            val errorResponse =
+                                Gson().fromJson(responseJson, ArticlesResponse::class.java)
+                            showError(
+                                DialogMessage(
+                                    "Access Error",
+                                    errorResponse.message,
+                                ),
+                            )
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArticlesResponse>, t: Throwable) {
+                        t.message?.let {
+                            showError(
+                                DialogMessage(
+                                    "Network Error",
+                                    it,
+                                ),
+                            )
+                        }
+                    }
+                })
+        }
+    }
+
+    private fun initViews() {
+        getNewsResponse(catType)
+        articleAdapter.onItemClickListener = ArticleAdapter.OnItemClickListener { article, _ ->
+            beginNextDirection(article)
+        }
+    }
+
+    private fun beginNextDirection(article: Article) {
+        val action = NewsFragmentDirections.actionNewsFragmentToArticleDisplayFragment(article)
+        Navigation.findNavController(requireView()).navigate(action)
+    }
+
     private fun showNewsSources(sources: List<Source?>?) {
         showProgressBar(false)
+        if (sources?.size == 0) {
+            binding.emptyListTv.visibility = View.VISIBLE
+            return
+        }
         sources?.forEach { source ->
             val tab = binding.sourceTabLayout.newTab()
             tab.setText(source?.name)
@@ -112,44 +194,7 @@ class NewsFragment : Fragment() {
         binding.sourceTabLayout.getTabAt(0)?.select()
     }
 
-    private fun loadNewResource(source: Source?) {
-        showProgressBar(true)
-        source?.id?.let { sourceId ->
-            ApiManager
-                .getServices()
-                .getNewsArticle(sources = sourceId)
-                .enqueue(object : Callback<ArticlesResponse> {
-                    override fun onResponse(
-                        call: Call<ArticlesResponse>,
-                        response: Response<ArticlesResponse>,
-                    ) {
-                        if (response.isSuccessful) {
-                            setUpArticle(response.body()?.articles)
-                            return
-                        } else {
-                            val responseJson = response.errorBody()?.string()
-                            val errorResponse =
-                                Gson().fromJson(responseJson, ArticlesResponse::class.java)
-                            showError(
-                                "Access Error",
-                                errorResponse.message,
-                            )
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ArticlesResponse>, t: Throwable) {
-                        t.message?.let {
-                            showError(
-                                "Network Error",
-                                it,
-                            )
-                        }
-                    }
-                })
-        }
-    }
-
-    private fun setUpArticle(articles: List<Article?>?) {
+    private fun showArticles(articles: List<Article?>?) {
         showProgressBar(false)
         articleAdapter.changeData(articles)
         binding.recyclerArticles.adapter = articleAdapter
@@ -160,17 +205,16 @@ class NewsFragment : Fragment() {
     }
 
     private fun showError(
-        errorTitle: String,
-        errorResponse: String?,
+        error: DialogMessage,
     ) {
         showProgressBar(false)
         val errorDialog = AlertDialog.Builder(requireContext())
         errorDialog
-            .setTitle(errorTitle)
-            .setMessage(errorResponse)
+            .setTitle(error.title)
+            .setMessage(error.message)
             .setCancelable(true)
             .setPositiveButton("Try Again") { dialog, _ ->
-                getNewsResponse()
+                getNewsResponse(catType)
                 dialog.dismiss()
             }
             .show()

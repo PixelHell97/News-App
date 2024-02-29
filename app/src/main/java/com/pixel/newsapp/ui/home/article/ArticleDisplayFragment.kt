@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.pixel.newsapp.FragmentExtensions
 import com.pixel.newsapp.R
 import com.pixel.newsapp.api.model.articleResponse.Article
 import com.pixel.newsapp.databinding.FragmentArticleDisplayBinding
+import com.pixel.newsapp.ui.home.host.MainActivity
 
 class ArticleDisplayFragment : Fragment() {
     private var _viewBinding: FragmentArticleDisplayBinding? = null
@@ -22,9 +24,10 @@ class ArticleDisplayFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View { 
+    ): View {
         _viewBinding = FragmentArticleDisplayBinding.inflate(inflater, container, false)
         article = args.ArticleSource
+        (activity as MainActivity).supportActionBar?.title = article?.source?.name
         return binding.root
     }
 
@@ -35,7 +38,7 @@ class ArticleDisplayFragment : Fragment() {
 
     private fun initView() {
         setArticleView()
-        binding.openArticle.setOnClickListener { 
+        binding.openArticle.setOnClickListener {
             val url = article?.url
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
@@ -43,13 +46,16 @@ class ArticleDisplayFragment : Fragment() {
     }
 
     private fun setArticleView() {
-        article?.let { 
-            binding.articleTitle.text = it.title
-            binding.articlePublishAt.text = it.publishedAt
-            binding.articleBody.text = it.description
-            binding.articleSource.text = it.source?.name
-            Glide.with(this)
-                .load(it.urlToImage)
+        article?.let { article ->
+            binding.articleTitle.text = article.title
+            binding.articlePublishAt.text = article.publishedAt?.let {
+                FragmentExtensions.formatDurationFromNow(it)
+            }
+            binding.articleBody.text = article.description
+            binding.articleSource.text = article.source?.name
+            Glide
+                .with(this)
+                .load(article.urlToImage)
                 .placeholder(R.drawable.ic_logo)
                 .into(binding.articleImage)
         }

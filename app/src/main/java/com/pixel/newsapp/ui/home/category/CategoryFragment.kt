@@ -31,7 +31,7 @@ class CategoryFragment : Fragment() {
             navigateNews(it, categoryType)
         }
         binding.categoryPolitics.setOnClickListener {
-            val categoryType = "general"
+            val categoryType = "politics"
             navigateNews(it, categoryType)
         }
         binding.categoryHealth.setOnClickListener {

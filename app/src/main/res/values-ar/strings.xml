@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">News App</string>
+    <string name="pick_your_category_of_interest">اختر فئة اهتمامك</string>
+    <string name="sports">رياضه</string>
+    <string name="politics">سياسه</string>
+    <string name="health">صحه</string>
+    <string name="business">اعمال</string>
+    <string name="environment">البيئه</string>
+    <string name="science">علوم</string>
+    <string name="category">فئة</string>
+    <string name="settings">الاعدادات</string>
+    <string name="language">اللغه</string>
+    <string name="view_full_article">عرض المقال كاملا</string>
+    <string name="there_is_no_article_here_right_now_npleace_come_back_later">لا توجد اخبار في هذا القسم الان\\nالرجاء العوده لاحقا</string>
+</resources>
