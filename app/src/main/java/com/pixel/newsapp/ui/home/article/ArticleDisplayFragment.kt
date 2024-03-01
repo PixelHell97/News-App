@@ -39,10 +39,14 @@ class ArticleDisplayFragment : Fragment() {
     private fun initView() {
         setArticleView()
         binding.openArticle.setOnClickListener {
-            val url = article?.url
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            startActivity(intent)
+            openArticleSource()
         }
+    }
+
+    private fun openArticleSource() {
+        val url = article?.url
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
     private fun setArticleView() {

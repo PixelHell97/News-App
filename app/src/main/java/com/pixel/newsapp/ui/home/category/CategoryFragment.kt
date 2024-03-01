@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.FragmentCategoryBinding
 
 class CategoryFragment : Fragment() {
@@ -27,27 +28,27 @@ class CategoryFragment : Fragment() {
 
     private fun initViews() {
         binding.categorySports.setOnClickListener {
-            val categoryType = "sports"
+            val categoryType = resources.getString(R.string.sportsCategory)
             navigateNews(it, categoryType)
         }
         binding.categoryPolitics.setOnClickListener {
-            val categoryType = "politics"
+            val categoryType = resources.getString(R.string.politicsCategory)
             navigateNews(it, categoryType)
         }
         binding.categoryHealth.setOnClickListener {
-            val categoryType = "health"
+            val categoryType = resources.getString(R.string.healthCategory)
             navigateNews(it, categoryType)
         }
         binding.categoryBusiness.setOnClickListener {
-            val categoryType = "business"
+            val categoryType = resources.getString(R.string.businessCategory)
             navigateNews(it, categoryType)
         }
         binding.categoryEnvironment.setOnClickListener {
-            val categoryType = "environment"
+            val categoryType = resources.getString(R.string.environmentCategory)
             navigateNews(it, categoryType)
         }
         binding.categoryScience.setOnClickListener {
-            val categoryType = "science"
+            val categoryType = resources.getString(R.string.scienceCategory)
             navigateNews(it, categoryType)
         }
     }

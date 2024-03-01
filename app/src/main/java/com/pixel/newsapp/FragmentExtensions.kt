@@ -1,16 +1,22 @@
 package com.pixel.newsapp
 
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
 object FragmentExtensions {
 
     fun formatDurationFromNow(dateString: String): String {
         val dateFormat = when {
-            dateString.contains(".") -> SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSSSSS'Z'", Locale.getDefault())
-            else -> SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            dateString.contains(".") -> SimpleDateFormat(
+                Constants.DATE_PATTERN1,
+                Locale.getDefault(),
+            )
+
+            else -> SimpleDateFormat(Constants.DATE_PATTERN2, Locale.getDefault())
         }
-        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+        dateFormat.timeZone = TimeZone.getTimeZone(Constants.TIMEZONE)
 
         val currentDate = Calendar.getInstance().time
         val providedDate = dateFormat.parse(dateString)

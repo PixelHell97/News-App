@@ -22,13 +22,14 @@ class SettingsFragment : Fragment() {
         super.onResume()
         setDropDownMenu()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         _viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
-        
+
         return binding.root
     }
 
@@ -48,6 +49,7 @@ class SettingsFragment : Fragment() {
                     resources.getString(R.string.ar) -> {
                         true
                     }
+
                     else -> {
                         false
                     }

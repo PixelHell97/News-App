@@ -17,4 +17,12 @@
     <string name="en" translatable="false">English</string>
     <string name="view_full_article">View Full Article</string>
     <string name="there_is_no_article_here_right_now_npleace_come_back_later">There is no article here right now\nPleace come back later</string>
+    <!-- Magic words -->
+
+    <string name="sportsCategory" translatable="false">sports</string>
+    <string name="politicsCategory" translatable="false">politics</string>
+    <string name="healthCategory" translatable="false">health</string>
+    <string name="businessCategory" translatable="false">business</string>
+    <string name="environmentCategory" translatable="false">environment</string>
+    <string name="scienceCategory" translatable="false">science</string>
 </resources>

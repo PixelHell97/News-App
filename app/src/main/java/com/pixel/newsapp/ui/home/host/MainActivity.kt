@@ -17,26 +17,13 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-
     private lateinit var listener: NavController.OnDestinationChangedListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
-
-        listener =
-            NavController.OnDestinationChangedListener { controller, destination, arguments ->
-                when (destination.id) {
-                    R.id.settingsFragment -> {
-                        binding.contentMain.homeToolBar.isTitleCentered = false
-                    }
-
-                    else -> {
-                        binding.contentMain.homeToolBar.isTitleCentered = true
-                    }
-                }
-            }
     }
 
     override fun onPause() {
@@ -67,6 +54,19 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        listener =
+            NavController.OnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.settingsFragment -> {
+                        binding.contentMain.homeToolBar.isTitleCentered = false
+                    }
+
+                    else -> {
+                        binding.contentMain.homeToolBar.isTitleCentered = true
+                    }
+                }
+            }
     }
 
     override fun onSupportNavigateUp(): Boolean {
