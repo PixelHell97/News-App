@@ -8,9 +8,9 @@
     <string name="business">اعمال</string>
     <string name="environment">البيئه</string>
     <string name="science">علوم</string>
-    <string name="category">فئة</string>
+    <string name="category">الفئة</string>
     <string name="settings">الاعدادات</string>
     <string name="language">اللغه</string>
     <string name="view_full_article">عرض المقال كاملا</string>
-    <string name="there_is_no_article_here_right_now_npleace_come_back_later">لا توجد اخبار في هذا القسم الان\\nالرجاء العوده لاحقا</string>
+    <string name="there_is_no_article_here_right_now_npleace_come_back_later">لا توجد اخبار في هذا القسم الان\nالرجاء العوده لاحقا</string>
 </resources>

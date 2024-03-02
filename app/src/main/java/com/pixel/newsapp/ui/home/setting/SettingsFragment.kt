@@ -1,6 +1,6 @@
 package com.pixel.newsapp.ui.home.setting
 
-import android.content.res.Configuration
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +11,12 @@ import androidx.fragment.app.Fragment
 import com.pixel.newsapp.Constants
 import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.FragmentSettingsBinding
+import com.pixel.newsapp.ui.home.host.MainActivity
 import java.util.Locale
 
 class SettingsFragment : Fragment() {
-    private var _viewBinding: FragmentSettingsBinding? = null
-    private val binding get() = _viewBinding!!
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var languageAdapter: ArrayAdapter<String>
 
     override fun onResume() {
@@ -28,8 +29,7 @@ class SettingsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _viewBinding = FragmentSettingsBinding.inflate(inflater, container, false)
-
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,18 +40,21 @@ class SettingsFragment : Fragment() {
         binding.languageDropDown.setAdapter(languageAdapter)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         binding.languageDropDown.doOnTextChanged { text, _, _, _ ->
             changeLanguage(
                 when (text?.toString()) {
                     resources.getString(R.string.ar) -> {
-                        true
+                        Constants.ARABIC_KEY
                     }
 
                     else -> {
-                        false
+                        Constants.ENGLISH_KEY
                     }
                 },
             )
@@ -74,26 +77,32 @@ class SettingsFragment : Fragment() {
         )
     }
 
-    private fun changeLanguage(boolean: Boolean) {
-        setLocal(if (boolean) Constants.ARABIC_KEY else Constants.ENGLISH_KEY)
+    private fun restartApplication() {
+        val intent = Intent(activity, MainActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
+        // activity?.recreate() // we can't recreate the fragment manually
     }
 
-    private fun setLocal(s: String) {
-        val local = Locale(s)
-        Locale.setDefault(local)
-        val configuration = Configuration()
-        configuration.setLocale(local)
+    private fun changeLanguage(key: String) {
+        val locale = Locale(key)
+        Locale.setDefault(locale)
+        val res = resources
+        val configuration = res.configuration
+        configuration.setLocale(locale)
+        configuration.setLayoutDirection(locale)
         activity?.let {
             @Suppress("DEPRECATION")
-            requireActivity().baseContext.resources.updateConfiguration(
+            it.baseContext.resources.updateConfiguration(
                 configuration,
                 requireActivity().baseContext.resources.displayMetrics,
             )
         }
+        restartApplication()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        _viewBinding = null
+        _binding = null
     }
 }

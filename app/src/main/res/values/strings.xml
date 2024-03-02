@@ -25,4 +25,6 @@
     <string name="businessCategory" translatable="false">business</string>
     <string name="environmentCategory" translatable="false">environment</string>
     <string name="scienceCategory" translatable="false">science</string>
+    <!-- Search -->
+    <string name="search" translatable="false">Search</string>
 </resources>

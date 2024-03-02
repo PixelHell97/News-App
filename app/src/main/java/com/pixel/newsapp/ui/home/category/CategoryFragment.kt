@@ -12,6 +12,7 @@ import com.pixel.newsapp.databinding.FragmentCategoryBinding
 class CategoryFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,7 +22,10 @@ class CategoryFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
@@ -29,32 +33,70 @@ class CategoryFragment : Fragment() {
     private fun initViews() {
         binding.categorySports.setOnClickListener {
             val categoryType = resources.getString(R.string.sportsCategory)
-            navigateNews(it, categoryType)
+            val title = resources.getString(R.string.sports)
+            /*arrayOf(
+                resources.getString(R.string.sportsCategory),
+                resources.getString(R.string.sports),
+            )*/
+            navigateNews(it, categoryType, title)
         }
         binding.categoryPolitics.setOnClickListener {
             val categoryType = resources.getString(R.string.politicsCategory)
-            navigateNews(it, categoryType)
+            val title = resources.getString(R.string.politics)
+            /*arrayOf(
+                resources.getString(R.string.politicsCategory),
+                resources.getString(R.string.politics),
+            )*/
+            navigateNews(it, categoryType, title)
         }
         binding.categoryHealth.setOnClickListener {
             val categoryType = resources.getString(R.string.healthCategory)
-            navigateNews(it, categoryType)
+            val title = resources.getString(R.string.health)
+            /*arrayOf(
+                resources.getString(R.string.healthCategory),
+                resources.getString(R.string.health),
+            )*/
+            navigateNews(it, categoryType, title)
         }
         binding.categoryBusiness.setOnClickListener {
             val categoryType = resources.getString(R.string.businessCategory)
-            navigateNews(it, categoryType)
+            val title = resources.getString(R.string.business)
+            /*arrayOf(
+                resources.getString(R.string.businessCategory),
+                resources.getString(R.string.business),
+            )*/
+            navigateNews(it, categoryType, title)
         }
         binding.categoryEnvironment.setOnClickListener {
             val categoryType = resources.getString(R.string.environmentCategory)
-            navigateNews(it, categoryType)
+            val title = resources.getString(R.string.environment)
+            /*arrayOf(
+                resources.getString(R.string.environmentCategory),
+                resources.getString(R.string.environment),
+            )*/
+            navigateNews(it, categoryType, title)
         }
         binding.categoryScience.setOnClickListener {
             val categoryType = resources.getString(R.string.scienceCategory)
-            navigateNews(it, categoryType)
+            val title = resources.getString(R.string.science)
+            /*arrayOf(
+                resources.getString(R.string.scienceCategory),
+                resources.getString(R.string.science),
+            )*/
+            navigateNews(it, categoryType, title)
         }
     }
 
-    private fun navigateNews(view: View, categoryType: String) {
-        val action = CategoryFragmentDirections.actionCategoryFragmentToNewsFragment(categoryType)
+    private fun navigateNews(
+        view: View,
+        categoryType: String,
+        toolbarTitle: String,
+    ) {
+        val action =
+            CategoryFragmentDirections.actionCategoryFragmentToNewsFragment(
+                categoryType,
+                toolbarTitle,
+            )
         Navigation.findNavController(view).navigate(action)
     }
 
