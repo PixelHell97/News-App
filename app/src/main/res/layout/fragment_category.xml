@@ -129,35 +129,41 @@
                     android:textSize="22sp" />
             </LinearLayout>
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/category_business"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/rounded_caramel_corners"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:gravity="center">
 
                 <ImageView
+                    android:id="@+id/business_img"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:importantForAccessibility="no"
-                    android:src="@drawable/ic_bussines" />
+                    android:src="@drawable/ic_bussines"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="22dp"
                     android:fontFamily="@font/exo"
                     android:text="@string/business"
                     android:textColor="@color/white"
-                    android:textSize="22sp" />
-            </RelativeLayout>
+                    android:textSize="22sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/business_img"
+                    app:layout_constraintStart_toStartOf="@id/business_img" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <LinearLayout
