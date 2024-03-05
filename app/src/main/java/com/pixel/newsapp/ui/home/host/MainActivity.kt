@@ -13,6 +13,7 @@ import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -39,19 +40,21 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val drawerLayout = binding.drawerLayout
         val navView = binding.sideNavMenu
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.fragment_container_view) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager
+                .findFragmentById(R.id.fragment_container_view) as NavHostFragment
         navController = navHostFragment.navController
 
         setSupportActionBar(binding.contentMain.homeToolBar)
 
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.categoryFragment,
-                R.id.settingsFragment,
-            ),
-            drawerLayout,
-        )
+        appBarConfiguration =
+            AppBarConfiguration(
+                setOf(
+                    R.id.categoryFragment,
+                    R.id.settingsFragment,
+                ),
+                drawerLayout,
+            )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

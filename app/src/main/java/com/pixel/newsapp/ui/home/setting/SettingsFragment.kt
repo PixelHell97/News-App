@@ -17,7 +17,7 @@ import com.pixel.newsapp.databinding.FragmentSettingsBinding
 import com.pixel.newsapp.ui.home.host.MainActivity
 
 class SettingsFragment : Fragment() {
-    @Suppress("ktlint:standard:property-naming")
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentSettingsBinding? = null
     private lateinit var settingsViewModel: SettingsViewModel
 
@@ -71,7 +71,6 @@ class SettingsFragment : Fragment() {
                         ?.apply()
                 }
             }
-            settingsViewModel.updateSettingPreference(context, text)
             LocaleHelper.setLocale(requireContext())
             restartApplication()
         }

@@ -1,94 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="12dp"
-    tools:context=".ui.home.article.ArticleDisplayFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/article_image"
+    <data>
+
+        <variable
+            name="article"
+            type="com.pixel.newsapp.api.model.articleResponse.Article" />
+
+        <import type="com.pixel.newsapp.FragmentExtensions" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="230dp"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        app:shapeAppearanceOverlay="@style/RoundedSquare"
-        tools:src="@tools:sample/backgrounds/scenic" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="12dp"
+        tools:context=".ui.home.article.ArticleDisplayFragment">
 
-    <TextView
-        android:id="@+id/article_source"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppins"
-        android:textColor="@color/authorTextColor"
-        android:textSize="14sp"
-        tools:text="BBC News" />
-
-    <TextView
-        android:id="@+id/article_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginHorizontal="8dp"
-        android:fontFamily="@font/poppins_medium"
-        android:textColor="@color/titleTextColor"
-        android:textSize="22sp"
-        tools:text="SAG Awards 2024: Oppenheimer dominates ahead of Oscars" />
-
-    <TextView
-        android:id="@+id/article_publishAt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginBottom="8dp"
-        android:textColor="@color/timeTextColor"
-        android:textSize="16sp"
-        tools:text="3 hours" />
-
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white">
-
-        <ScrollView
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/article_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="230dp"
+            android:importantForAccessibility="no"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{article.urlToImage}"
+            app:shapeAppearanceOverlay="@style/RoundedSquare"
+            tools:src="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/article_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@{article.title}"
+            android:textColor="@color/titleTextColor"
+            android:textSize="22sp"
+            tools:text="SAG Awards 2024: Oppenheimer dominates ahead of Oscars" />
+
+        <TextView
+            android:id="@+id/article_publishAt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginBottom="8dp"
+            android:text="@{FragmentExtensions.INSTANCE.formatDurationFromNow(article.publishedAt)}"
+            android:textColor="@color/timeTextColor"
+            android:textSize="16sp"
+            tools:text="3 hours" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/white">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@color/white">
 
-                <TextView
-                    android:id="@+id/article_body"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="12dp"
-                    android:layout_marginBottom="12dp"
-                    android:fontFamily="@font/poppins_light"
-                    android:textColor="@color/text_gray"
-                    android:textSize="16sp" />
+                    android:background="@color/white"
+                    android:orientation="vertical">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/open_article"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|end"
-                    android:layout_margin="8dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:gravity="center"
-                    android:text="@string/view_full_article"
-                    android:textSize="14sp"
-                    app:drawableEndCompat="@drawable/ic_arrow_right" />
-            </LinearLayout>
-        </ScrollView>
-    </com.google.android.material.card.MaterialCardView>
-</LinearLayout>
+                    <TextView
+                        android:id="@+id/article_body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/poppins_light"
+                        android:text="@{article.description}"
+                        android:textColor="@color/text_gray"
+                        android:textSize="16sp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/open_article"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:gravity="center"
+                        android:text="@string/view_full_article"
+                        android:textSize="14sp"
+                        app:drawableEndCompat="@drawable/ic_arrow_right" />
+                </LinearLayout>
+            </ScrollView>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</layout>

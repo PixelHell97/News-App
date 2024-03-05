@@ -5,6 +5,11 @@
 
     <data>
 
+        <variable
+            name="article"
+            type="com.pixel.newsapp.api.model.articleResponse.Article" />
+
+        <import type="com.pixel.newsapp.FragmentExtensions" />
     </data>
 
 
@@ -20,6 +25,7 @@
             android:layout_height="230dp"
             android:importantForAccessibility="no"
             android:scaleType="centerCrop"
+            app:imageUrl="@{article.urlToImage}"
             app:shapeAppearanceOverlay="@style/RoundedSquare"
             tools:src="@tools:sample/backgrounds/scenic" />
 
@@ -30,6 +36,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/poppins"
+            android:text="@{article.source.name}"
             android:textColor="@color/authorTextColor"
             android:textSize="14sp"
             tools:text="BBC News" />
@@ -41,6 +48,7 @@
             android:layout_gravity="start"
             android:layout_marginHorizontal="8dp"
             android:fontFamily="@font/poppins_medium"
+            android:text="@{article.title}"
             android:textColor="@color/titleTextColor"
             android:textSize="22sp"
             tools:text="SAG Awards 2024: Oppenheimer dominates ahead of Oscars" />
@@ -52,6 +60,7 @@
             android:layout_gravity="end"
             android:layout_marginHorizontal="12dp"
             android:layout_marginBottom="8dp"
+            android:text="@{FragmentExtensions.INSTANCE.formatDurationFromNow(article.publishedAt)}"
             android:textColor="@color/timeTextColor"
             android:textSize="16sp"
             tools:text="3 hours" />

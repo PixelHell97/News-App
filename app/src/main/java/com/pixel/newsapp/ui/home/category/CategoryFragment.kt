@@ -10,6 +10,7 @@ import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.FragmentCategoryBinding
 
 class CategoryFragment : Fragment() {
+    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
 
@@ -34,55 +35,31 @@ class CategoryFragment : Fragment() {
         binding.categorySports.setOnClickListener {
             val categoryType = resources.getString(R.string.sportsCategory)
             val title = resources.getString(R.string.sports)
-            /*arrayOf(
-                resources.getString(R.string.sportsCategory),
-                resources.getString(R.string.sports),
-            )*/
             navigateNews(it, categoryType, title)
         }
         binding.categoryPolitics.setOnClickListener {
             val categoryType = resources.getString(R.string.politicsCategory)
             val title = resources.getString(R.string.politics)
-            /*arrayOf(
-                resources.getString(R.string.politicsCategory),
-                resources.getString(R.string.politics),
-            )*/
             navigateNews(it, categoryType, title)
         }
         binding.categoryHealth.setOnClickListener {
             val categoryType = resources.getString(R.string.healthCategory)
             val title = resources.getString(R.string.health)
-            /*arrayOf(
-                resources.getString(R.string.healthCategory),
-                resources.getString(R.string.health),
-            )*/
             navigateNews(it, categoryType, title)
         }
         binding.categoryBusiness.setOnClickListener {
             val categoryType = resources.getString(R.string.businessCategory)
             val title = resources.getString(R.string.business)
-            /*arrayOf(
-                resources.getString(R.string.businessCategory),
-                resources.getString(R.string.business),
-            )*/
             navigateNews(it, categoryType, title)
         }
         binding.categoryEnvironment.setOnClickListener {
             val categoryType = resources.getString(R.string.environmentCategory)
             val title = resources.getString(R.string.environment)
-            /*arrayOf(
-                resources.getString(R.string.environmentCategory),
-                resources.getString(R.string.environment),
-            )*/
             navigateNews(it, categoryType, title)
         }
         binding.categoryScience.setOnClickListener {
             val categoryType = resources.getString(R.string.scienceCategory)
             val title = resources.getString(R.string.science)
-            /*arrayOf(
-                resources.getString(R.string.scienceCategory),
-                resources.getString(R.string.science),
-            )*/
             navigateNews(it, categoryType, title)
         }
     }

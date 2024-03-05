@@ -25,6 +25,7 @@ object LocaleHelper {
         val config = context.resources?.configuration
         config?.setLocale(locale)
         config?.setLayoutDirection(locale)
+        @Suppress("DEPRECATION")
         context.resources.updateConfiguration(config, context.resources.displayMetrics)
     }
 }
