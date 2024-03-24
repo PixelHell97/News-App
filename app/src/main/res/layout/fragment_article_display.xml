@@ -7,7 +7,7 @@
 
         <variable
             name="article"
-            type="com.pixel.newsapp.api.model.articleResponse.Article" />
+            type="com.pixel.newsapp.data.api.model.articleResponse.Article" />
 
         <import type="com.pixel.newsapp.FragmentExtensions" />
     </data>
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="12dp"
-        tools:context=".ui.home.article.ArticleDisplayFragment">
+        tools:context=".ui.home.fragment.article.ArticleDisplayFragment">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/article_image"

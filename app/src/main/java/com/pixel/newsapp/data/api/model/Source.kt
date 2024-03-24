@@ -1,4 +1,4 @@
-package com.pixel.newsapp.api.model
+package com.pixel.newsapp.data.api.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

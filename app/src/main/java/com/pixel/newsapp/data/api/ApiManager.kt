@@ -1,4 +1,4 @@
-package com.pixel.newsapp.api
+package com.pixel.newsapp.data.api
 
 import android.util.Log
 import okhttp3.OkHttpClient

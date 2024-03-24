@@ -1,4 +1,4 @@
-package com.pixel.newsapp.ui.home.news
+package com.pixel.newsapp.ui.home.fragment.news
 
 data class DialogMessage(
     val title: String?,

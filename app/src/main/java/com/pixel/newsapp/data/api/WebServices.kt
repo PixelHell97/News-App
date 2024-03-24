@@ -1,22 +1,21 @@
-package com.pixel.newsapp.api
+package com.pixel.newsapp.data.api
 
 import com.pixel.newsapp.Constants
-import com.pixel.newsapp.api.model.articleResponse.ArticlesResponse
-import com.pixel.newsapp.api.model.sourcesResponse.SourcesResponse
-import retrofit2.Call
+import com.pixel.newsapp.data.api.model.articleResponse.ArticlesResponse
+import com.pixel.newsapp.data.api.model.sourcesResponse.SourcesResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface WebServices {
     @GET("v2/top-headlines/sources")
-    fun getNewsSources(
+    suspend fun getNewsSources(
         @Query("category") category: String?,
         @Query("apiKey") apiKey: String = Constants.apiKey,
-    ): Call<SourcesResponse>
+    ): SourcesResponse
 
     @GET("v2/top-headlines")
-    fun getNewsArticle(
+    suspend fun getNewsArticle(
         @Query("sources") sources: String?,
         @Query("apiKey") apiKey: String = Constants.apiKey,
-    ): Call<ArticlesResponse>
+    ): ArticlesResponse
 }

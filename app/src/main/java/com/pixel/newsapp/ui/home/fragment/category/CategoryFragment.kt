@@ -1,27 +1,18 @@
-package com.pixel.newsapp.ui.home.category
+package com.pixel.newsapp.ui.home.fragment.category
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.FragmentCategoryBinding
+import com.pixel.newsapp.ui.base.BaseFragment
 
-class CategoryFragment : Fragment() {
-    @Suppress("ktlint:standard:backing-property-naming")
-    private var _binding: FragmentCategoryBinding? = null
-    private val binding get() = _binding!!
+class CategoryFragment : BaseFragment<FragmentCategoryBinding, CategoryViewModel>() {
+    override fun initViewModel(): CategoryViewModel =
+        ViewModelProvider(this)[CategoryViewModel::class.java]
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentCategoryBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_category
 
     override fun onViewCreated(
         view: View,
@@ -75,10 +66,5 @@ class CategoryFragment : Fragment() {
                 toolbarTitle,
             )
         Navigation.findNavController(view).navigate(action)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

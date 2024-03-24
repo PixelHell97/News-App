@@ -1,4 +1,4 @@
-package com.pixel.newsapp.api.model.articleResponse
+package com.pixel.newsapp.data.api.model.articleResponse
 
 import com.google.gson.annotations.SerializedName
 

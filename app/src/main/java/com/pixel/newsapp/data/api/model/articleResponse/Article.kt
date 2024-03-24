@@ -1,8 +1,8 @@
-package com.pixel.newsapp.api.model.articleResponse
+package com.pixel.newsapp.data.api.model.articleResponse
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.pixel.newsapp.api.model.Source
+import com.pixel.newsapp.data.api.model.Source
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

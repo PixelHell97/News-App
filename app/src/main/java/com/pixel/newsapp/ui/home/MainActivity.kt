@@ -1,4 +1,4 @@
-package com.pixel.newsapp.ui.home.host
+package com.pixel.newsapp.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,6 @@ import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    @Suppress("ktlint:standard:backing-property-naming")
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var appBarConfiguration: AppBarConfiguration

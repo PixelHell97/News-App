@@ -1,68 +1,50 @@
-package com.pixel.newsapp.ui.home.news
+package com.pixel.newsapp.ui.home.fragment.news
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
-import com.pixel.newsapp.api.model.Source
-import com.pixel.newsapp.api.model.articleResponse.Article
+import com.pixel.newsapp.R
+import com.pixel.newsapp.data.api.model.Source
+import com.pixel.newsapp.data.api.model.articleResponse.Article
 import com.pixel.newsapp.databinding.FragmentNewsBinding
-import com.pixel.newsapp.ui.home.host.MainActivity
+import com.pixel.newsapp.ui.base.BaseFragment
+import com.pixel.newsapp.ui.home.MainActivity
 
-class NewsFragment : Fragment() {
-    @Suppress("ktlint:standard:property-naming")
-    private var _binding: FragmentNewsBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var newsViewModel: NewsViewModel
+class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
+    override fun initViewModel(): NewsViewModel =
+        ViewModelProvider(this)[NewsViewModel::class.java]
+
+    override fun getLayoutId(): Int = R.layout.fragment_news
+
     private val args: NewsFragmentArgs by navArgs()
-    private var catType: String? = null
-    private var title: String? = null
-    private var articleAdapter = ArticleAdapter(null)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        newsViewModel = ViewModelProvider(this)[NewsViewModel::class.java]
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentNewsBinding.inflate(inflater, container, false)
-        title = args.toolbarTitle
-        (activity as MainActivity).supportActionBar?.title = title.toString()
-        return binding.root
-    }
+    private var articleAdapter = ArticleAdapter()
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        catType = args.categoryType
+        (activity as MainActivity).supportActionBar?.title = args.toolbarTitle
         observeData()
         initViews()
     }
 
     private fun observeData() {
-        newsViewModel.newsList.observe(viewLifecycleOwner) { sourcesList ->
+        viewModel.newsList.observe(viewLifecycleOwner) { sourcesList ->
             showNewsSources(sourcesList)
         }
-        newsViewModel.articleList.observe(viewLifecycleOwner) { articleList ->
+        viewModel.articleList.observe(viewLifecycleOwner) { articleList ->
             showArticles(articleList)
         }
-        newsViewModel.showProgressBar.observe(viewLifecycleOwner) { isLoading ->
+        viewModel.showProgressBar.observe(viewLifecycleOwner) { isLoading ->
             showProgressBar(isLoading)
         }
-        newsViewModel.errorDialog.observe(viewLifecycleOwner) {
+        viewModel.errorDialog.observe(viewLifecycleOwner) {
             if (it != null) {
                 showError(it)
             }
@@ -70,7 +52,7 @@ class NewsFragment : Fragment() {
     }
 
     private fun initViews() {
-        catType?.let { newsViewModel.getNewsResponse(it) }
+        args.categoryType.let { viewModel.getNewsResponse(it) }
         articleAdapter.onItemClickListener =
             ArticleAdapter.OnItemClickListener { article, _ ->
                 beginNextDirection(article)
@@ -98,7 +80,7 @@ class NewsFragment : Fragment() {
             object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab?) {
                     val source = tab?.tag as Source
-                    newsViewModel.loadNewResource(source)
+                    viewModel.loadNewResource(source)
                 }
 
                 override fun onTabUnselected(tab: TabLayout.Tab?) {
@@ -106,7 +88,7 @@ class NewsFragment : Fragment() {
 
                 override fun onTabReselected(tab: TabLayout.Tab?) {
                     val source = tab?.tag as Source
-                    newsViewModel.loadNewResource(source)
+                    viewModel.loadNewResource(source)
                 }
             },
         )
@@ -131,14 +113,9 @@ class NewsFragment : Fragment() {
             .setMessage(error.message)
             .setCancelable(true)
             .setPositiveButton("Try Again") { dialog, _ ->
-                catType?.let { newsViewModel.getNewsResponse(it) }
+                args.categoryType.let { viewModel.getNewsResponse(it) }
                 dialog.dismiss()
             }
             .show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }

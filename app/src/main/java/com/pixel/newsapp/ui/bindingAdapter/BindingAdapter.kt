@@ -1,11 +1,11 @@
-package com.pixel.newsapp.bindingAdapter
+package com.pixel.newsapp.ui.bindingAdapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.pixel.newsapp.R
 
-@BindingAdapter("app:imageUrl")
+@BindingAdapter("imageUrl")
 fun loadImageFromUrl(
     imageView: ImageView,
     imageUrl: String?,

@@ -1,12 +1,12 @@
-package com.pixel.newsapp.ui.home.news
+package com.pixel.newsapp.ui.home.fragment.news
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pixel.newsapp.api.model.articleResponse.Article
+import com.pixel.newsapp.data.api.model.articleResponse.Article
 import com.pixel.newsapp.databinding.ItemArticleBinding
 
-class ArticleAdapter(private var articleList: List<Article?>?) :
+class ArticleAdapter(private var articleList: MutableList<Article?>? = null) :
     RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
     class ViewHolder(private val binding: ItemArticleBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -42,8 +42,18 @@ class ArticleAdapter(private var articleList: List<Article?>?) :
     override fun getItemCount(): Int = articleList?.size ?: 0
 
     fun changeData(articles: List<Article?>?) {
-        this.articleList = articles
-        notifyDataSetChanged()
+        if (articleList == null) {
+            articleList = mutableListOf()
+        }
+        articleList?.apply {
+            this.clear()
+            if (articles != null) {
+                this.addAll(articles)
+            } else {
+                articleList = emptyList<Article>().toMutableList()
+            }
+        }
+        notifyItemRangeInserted(0, articles?.size ?: return)
     }
 
     var onItemClickListener: OnItemClickListener? = null

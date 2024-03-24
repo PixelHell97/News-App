@@ -1,7 +1,7 @@
-package com.pixel.newsapp.api.model.sourcesResponse
+package com.pixel.newsapp.data.api.model.sourcesResponse
 
 import com.google.gson.annotations.SerializedName
-import com.pixel.newsapp.api.model.Source
+import com.pixel.newsapp.data.api.model.Source
 
 data class SourcesResponse(
     @SerializedName("sources")

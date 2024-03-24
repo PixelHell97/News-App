@@ -1,46 +1,30 @@
-package com.pixel.newsapp.ui.home.setting
+package com.pixel.newsapp.ui.home.fragment.setting
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.pixel.newsapp.Constants
 import com.pixel.newsapp.LocaleHelper
 import com.pixel.newsapp.R
 import com.pixel.newsapp.databinding.FragmentSettingsBinding
-import com.pixel.newsapp.ui.home.host.MainActivity
+import com.pixel.newsapp.ui.base.BaseFragment
+import com.pixel.newsapp.ui.home.MainActivity
 
-class SettingsFragment : Fragment() {
-    @Suppress("ktlint:standard:backing-property-naming")
-    private var _binding: FragmentSettingsBinding? = null
-    private lateinit var settingsViewModel: SettingsViewModel
+class SettingsFragment : BaseFragment<FragmentSettingsBinding, SettingsViewModel>() {
+    override fun initViewModel(): SettingsViewModel =
+        ViewModelProvider(this)[SettingsViewModel::class.java]
 
-    private val binding get() = _binding!!
+    override fun getLayoutId(): Int = R.layout.fragment_settings
+
     private lateinit var languageAdapter: ArrayAdapter<String>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
-    }
 
     override fun onResume() {
         super.onResume()
         setDropDownMenu()
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     private fun setDropDownMenu() {
@@ -78,7 +62,7 @@ class SettingsFragment : Fragment() {
 
     private fun initViews() {
         binding.languageDropDown.setText(
-            when (settingsViewModel.isArabicLang(context)) {
+            when (viewModel.isArabicLang(context)) {
                 true -> resources.getString(R.string.ar)
                 false -> resources.getString(R.string.en)
             },
@@ -89,10 +73,5 @@ class SettingsFragment : Fragment() {
         val intent = Intent(activity, MainActivity::class.java)
         startActivity(intent)
         activity?.finish()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 }
