@@ -3,7 +3,7 @@ package com.pixel.newsapp.ui.home.fragment.news
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pixel.newsapp.data.api.model.articleResponse.Article
+import com.pixel.domain.model.Article
 import com.pixel.newsapp.databinding.ItemArticleBinding
 
 class ArticleAdapter(private var articleList: MutableList<Article?>? = null) :

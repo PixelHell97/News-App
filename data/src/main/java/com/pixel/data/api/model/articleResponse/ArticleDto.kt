@@ -1,12 +1,13 @@
-package com.pixel.newsapp.data.api.model.articleResponse
+package com.pixel.data.api.model.articleResponse
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import com.pixel.newsapp.data.api.model.Source
+import com.pixel.data.api.model.SourceDto
+import com.pixel.domain.model.Article
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Article(
+data class ArticleDto(
     @SerializedName("author")
     val author: String? = null,
     @SerializedName("content")
@@ -16,11 +17,24 @@ data class Article(
     @SerializedName("publishedAt")
     val publishedAt: String? = null,
     @SerializedName("source")
-    val source: Source? = null,
+    val source: SourceDto? = null,
     @SerializedName("title")
     val title: String? = null,
     @SerializedName("url")
     val url: String? = null,
     @SerializedName("urlToImage")
     val urlToImage: String? = null,
-) : Parcelable
+) : Parcelable {
+    fun toArticle(): Article {
+        return Article(
+            author,
+            content,
+            description,
+            publishedAt,
+            source?.toSource(),
+            title,
+            url,
+            urlToImage,
+        )
+    }
+}

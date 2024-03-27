@@ -1,25 +1,38 @@
 package com.pixel.newsapp.ui.home.fragment.news
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
-import com.pixel.newsapp.R
-import com.pixel.newsapp.data.api.model.Source
-import com.pixel.newsapp.data.api.model.articleResponse.Article
+import com.pixel.domain.model.Article
+import com.pixel.domain.model.Source
 import com.pixel.newsapp.databinding.FragmentNewsBinding
-import com.pixel.newsapp.ui.base.BaseFragment
 import com.pixel.newsapp.ui.home.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
-    override fun initViewModel(): NewsViewModel =
-        ViewModelProvider(this)[NewsViewModel::class.java]
+@AndroidEntryPoint
+class NewsFragment : Fragment() {
 
-    override fun getLayoutId(): Int = R.layout.fragment_news
+    private var _binding: FragmentNewsBinding? = null
+
+    private val binding get() = _binding!!
+    private val viewModel: NewsViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        _binding = FragmentNewsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     private val args: NewsFragmentArgs by navArgs()
     private var articleAdapter = ArticleAdapter()
@@ -117,5 +130,10 @@ class NewsFragment : BaseFragment<FragmentNewsBinding, NewsViewModel>() {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

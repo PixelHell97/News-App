@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_article_display" >
         <argument
             android:name="ArticleSource"
-            app:argType="com.pixel.newsapp.data.api.model.articleResponse.Article"
+            app:argType="com.pixel.domain.model.Article"
             app:nullable="true"
             android:defaultValue="@null" />
     </fragment>

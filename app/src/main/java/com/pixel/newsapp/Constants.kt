@@ -1,9 +1,6 @@
 package com.pixel.newsapp
 
 object Constants {
-    // API
-    const val apiKey = "db86dae49e4741b1a09a9fc452960b56"
-
     // Setting
     const val SETTINGS = "setting"
     const val LANGUAGE = "lang"

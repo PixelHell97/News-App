@@ -1,11 +1,12 @@
-package com.pixel.newsapp.data.api.model
+package com.pixel.data.api.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import com.pixel.domain.model.Source
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Source(
+data class SourceDto(
     @SerializedName("category")
     val category: String? = null,
     @SerializedName("country")
@@ -20,4 +21,16 @@ data class Source(
     val name: String? = null,
     @SerializedName("url")
     val url: String? = null,
-) : Parcelable
+) : Parcelable {
+    fun toSource(): Source {
+        return Source(
+            category,
+            country,
+            description,
+            id,
+            language,
+            name,
+            url,
+        )
+    }
+}

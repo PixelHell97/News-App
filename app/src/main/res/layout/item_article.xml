@@ -7,7 +7,7 @@
 
         <variable
             name="article"
-            type="com.pixel.newsapp.data.api.model.articleResponse.Article" />
+            type="com.pixel.domain.model.Article" />
 
         <import type="com.pixel.newsapp.FragmentExtensions" />
     </data>

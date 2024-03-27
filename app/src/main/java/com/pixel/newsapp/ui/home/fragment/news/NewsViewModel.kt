@@ -3,17 +3,20 @@ package com.pixel.newsapp.ui.home.fragment.news
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.pixel.newsapp.data.api.ApiManager
-import com.pixel.newsapp.data.api.model.Source
-import com.pixel.newsapp.data.api.model.articleResponse.Article
-import com.pixel.newsapp.data.api.model.articleResponse.ArticlesResponse
-import com.pixel.newsapp.data.api.model.sourcesResponse.SourcesResponse
+import com.pixel.domain.contract.repository.articles.ArticleRepository
+import com.pixel.domain.contract.repository.sources.SourcesRepository
+import com.pixel.domain.model.Article
+import com.pixel.domain.model.Source
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
+import javax.inject.Inject
 
-class NewsViewModel : ViewModel() {
+@HiltViewModel
+class NewsViewModel @Inject constructor(
+    private val newsRepository: SourcesRepository,
+    private val articleRepository: ArticleRepository,
+) : ViewModel() {
     var newsList: MutableLiveData<List<Source?>?> = MutableLiveData()
     var articleList: MutableLiveData<List<Article?>?> = MutableLiveData()
     var errorDialog: MutableLiveData<DialogMessage?> = MutableLiveData()
@@ -23,18 +26,8 @@ class NewsViewModel : ViewModel() {
         showProgressBar.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val response = ApiManager.getServices().getNewsSources(category = category)
-                newsList.postValue(response.sources)
-            } catch (httpException: HttpException) {
-                val responseJson = httpException.response()?.errorBody().toString()
-                val errorResponse =
-                    Gson().fromJson(responseJson, SourcesResponse::class.java)
-                errorDialog.postValue(
-                    DialogMessage(
-                        "Access Error",
-                        errorResponse.message,
-                    ),
-                )
+                val response = newsRepository.getSources(category = category)
+                newsList.postValue(response)
             } catch (ex: Exception) {
                 ex.message?.let {
                     errorDialog.postValue(
@@ -55,18 +48,8 @@ class NewsViewModel : ViewModel() {
         source?.id?.let { sourceId ->
             viewModelScope.launch(Dispatchers.IO) {
                 try {
-                    val response = ApiManager.getServices().getNewsArticle(sources = sourceId)
-                    articleList.postValue(response.articles)
-                } catch (httpException: HttpException) {
-                    val responseJson = httpException.response()?.errorBody().toString()
-                    val errorResponse =
-                        Gson().fromJson(responseJson, ArticlesResponse::class.java)
-                    errorDialog.postValue(
-                        DialogMessage(
-                            "Access Error",
-                            errorResponse.message,
-                        ),
-                    )
+                    val response = articleRepository.getArticle(sourceId)
+                    articleList.postValue(response)
                 } catch (ex: Exception) {
                     ex.message?.let {
                         errorDialog.postValue(

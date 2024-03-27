@@ -1,13 +1,14 @@
-package com.pixel.newsapp.data.api.model.sourcesResponse
+package com.pixel.data.api.model.articleResponse
 
 import com.google.gson.annotations.SerializedName
-import com.pixel.newsapp.data.api.model.Source
 
-data class SourcesResponse(
-    @SerializedName("sources")
-    val sources: List<Source?>? = null,
+data class ArticlesResponse(
+    @SerializedName("articles")
+    val articles: List<ArticleDto?>? = null,
     @SerializedName("status")
     val status: String? = null,
+    @SerializedName("totalResults")
+    val totalResults: Int? = null,
     @SerializedName("code")
     val code: String? = null,
     @SerializedName("message")
