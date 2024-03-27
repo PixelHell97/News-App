@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayout
 import com.pixel.domain.model.Article
@@ -73,8 +73,9 @@ class NewsFragment : Fragment() {
     }
 
     private fun beginNextDirection(article: Article) {
-        val action = NewsFragmentDirections.actionNewsFragmentToArticleDisplayFragment(article)
-        Navigation.findNavController(requireView()).navigate(action)
+        val action =
+            NewsFragmentDirections.actionNewsFragmentToArticleDisplayFragment(article)
+        findNavController().navigate(action)
     }
 
     private fun showNewsSources(sources: List<Source?>?) {
